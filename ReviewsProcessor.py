@@ -102,6 +102,25 @@ class ReviewsProcessor:
             xmlContent = xmlContent + "  </reviewData>\r\n"
         xmlContent = xmlContent + "</root>\r\n"
         return xmlContent
+
+    def getReviewsInJSON(self):
+        jsonContent = '[\r\n'
+        for data in self.dataHolder:
+            jsonContent = jsonContent + '  {\r\n'
+            jsonContent = jsonContent + '    "ratingValue":' + str(data.ratingValue) + ', \r\n'
+            jsonContent = jsonContent + '    "datePublished":"' + str(data.datePublished) + '", \r\n'
+            jsonContent = jsonContent + '    "description":"' + str(data.description).replace('"','\\"').replace("\r","").replace("\n","") + '", \r\n'
+            jsonContent = jsonContent + '    "author":"' + str(data.author) + '", \r\n'
+            jsonContent = jsonContent + '    "joy_likelihood":' + str(data.joy_likelihood) + ', \r\n'
+            jsonContent = jsonContent + '    "sorrow_likelihood":' + str(data.sorrow_likelihood) + ', \r\n'
+            jsonContent = jsonContent + '    "anger_likelihood":' + str(data.anger_likelihood) + ', \r\n'
+            jsonContent = jsonContent + '    "surprise_likelihood":' + str(data.surprise_likelihood) + ', \r\n'
+            jsonContent = jsonContent + '    "under_exposed_likelihood":' + str(data.under_exposed_likelihood) + '\r\n'
+            jsonContent = jsonContent + '   } ,\r\n'
+        jsonContent = jsonContent[0:-4] + '\r\n'
+        jsonContent = jsonContent + ']\r\n'
+        return jsonContent
+        
     def getReviewData(self):
         return self.dataHolder
 

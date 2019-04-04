@@ -38,11 +38,11 @@ class UPNPHTTPServerHandler(BaseHTTPRequestHandler):
             return
         if self.path == '/result':
             self.send_response(200)
-            self.send_header('Content-type', 'text/xml')
+            self.send_header('Content-type', 'application/json')
             self.end_headers()
-            f = open("reviews.xml", "r")
-            self.xmlVal = f.read()
-            self.wfile.write(self.xmlVal.encode())
+            f = open("reviews.json", "r")
+            self.json = f.read()
+            self.wfile.write(self.json.encode())
             return
         else:
             self.send_response(404)
@@ -59,8 +59,8 @@ class UPNPHTTPServerHandler(BaseHTTPRequestHandler):
             print (post_data)
             rp = ReviewsProcessor.ReviewsProcessor(post_data)
             rp.process_scraping()
-            f = open("reviews.xml", "w")
-            f.write(rp.getReviewsInXML())
+            f = open("reviews.json", "w")
+            f.write(rp.getReviewsInJSON())
             f.close()
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
